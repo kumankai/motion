@@ -1,0 +1,16 @@
+services:
+  mysql:
+    image: mysql:latest
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+    ports:
+      - "8080:8080"
+    volumes:
+      - mysql-data:/var/lib/mysql
+      - ./scripts:/docker-entrypoint-initdb.d
+
+  auth:
+    image: jangga/auth:latest
+
+volumes:
+  mysql-data:
