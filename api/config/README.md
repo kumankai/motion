@@ -11,7 +11,7 @@ auth-api
 ```
 npm i jest --save-dev
 npm i express --save
-npm i bcrypt jsonwebtoken dotenv
+npm i bcrypt jsonwebtoken dotenv mongoose
 ```
 
 account-api

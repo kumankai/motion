@@ -9,6 +9,10 @@
   "scripts": {
     "test": "jest"
   },
-  "author": "",
+  "authors": [
+    "Jacob Angga jacobmondangga@gmail.com",
+    "Brian Grishin samsungkodi600@gmail.com",
+    "Muhammad Ashfaq mohammadaa.11.29@gmail.com"
+  ],
   "license": "ISC"
 }

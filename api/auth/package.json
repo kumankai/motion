@@ -13,7 +13,7 @@
   "authors": [
     "Jacob Angga jacobmondangga@gmail.com",
     "Brian Grishin samsungkodi600@gmail.com",
-    "Muhammad Ashfaq"
+    "Muhammad Ashfaq mohammadaa.11.29@gmail.com"
   ],
   "license": "ISC",
   "devDependencies": {
@@ -23,6 +23,7 @@
     "bcrypt": "^5.1.1",
     "dotenv": "^16.3.1",
     "express": "^4.18.2",
-    "jsonwebtoken": "^9.0.2"
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^8.0.3"
   }
 }
