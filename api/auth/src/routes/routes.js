@@ -14,6 +14,6 @@ router.post('/login', authActions.login);
 
 router.post('/logout', authActions.logout);
 
-router.post('/regenerate-token', authActions.regenerateToken);
+router.post('/regenerate-token', () => {});
 
 module.exports = router;

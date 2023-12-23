@@ -4,12 +4,12 @@ const mongoose = require('mongoose');
 const authRoutes = require('./src/routes/routes');
 
 const app = express();
-const PORT = 5000;
+const PORT = 5001;
 
 app.use(express.json());
 
 
-mongoose.connect(process.env.MDB_URL, { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true })
+mongoose.connect(process.env.MDB_URL)
 .then((result) => app.listen(PORT))
 .catch((err) => console.log(err));
 
