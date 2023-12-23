@@ -1,5 +1,5 @@
 /*
-Contains API routes
+Contains auth API routes
 */
 
 const express = require('express');

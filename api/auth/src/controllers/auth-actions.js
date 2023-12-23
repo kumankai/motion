@@ -14,12 +14,8 @@ const logout = async (req, res) => {
     
 }
 
-const regenerateToken = async (req, res) => {
+const regenToken = async (req, res) => {
     
 }
 
-const createAccessToken = async (req, res) => {
-    
-}
-
-module.exports = { signup, login, logout, regenerateToken, createAccessToken };
+module.exports = { signup, login, logout, regenerateToken };

@@ -10,15 +10,14 @@ auth-api
 
 ```
 npm i jest --save-dev
-npm i express --save
-npm i bcrypt jsonwebtoken dotenv mongoose
+npm i express bcrypt jsonwebtoken dotenv mongoose
 ```
 
 account-api
 
 ```
 npm i jest --save-dev
-npm i express --save
+npm i express dotenv
 ```
 
 ### Setting up Mysql on local machine
