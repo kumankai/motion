@@ -15,12 +15,25 @@ const userSchema = new mongoose.Schema({
     }
 });
 
+// Hashes pwd before save
 userSchema.pre('save', async function (next) {
     const salt = await bcrypt.genSalt();
     this.password = await bcrypt.hash(this.password, salt);
     next();
 })
 
+// Login method for User
+userSchema.statics.login = async function (username, password) {
+    const user = await this.findOne({ username });
+    if (user) {
+        const auth = await bcrypt.compare(password, user.password);
+        if (auth) {
+            return user;
+        }
+    }
+
+    throw Error('Incorrect credentials');
+}
 
 const User = mongoose.model('user', userSchema);
 
