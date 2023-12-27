@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 
+// User model
 const userSchema = new mongoose.Schema({
     username: {
         type: String,
@@ -20,7 +21,7 @@ userSchema.pre('save', async function (next) {
     const salt = await bcrypt.genSalt();
     this.password = await bcrypt.hash(this.password, salt);
     next();
-})
+});
 
 // Login method for User
 userSchema.statics.login = async function (username, password) {
