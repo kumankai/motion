@@ -19,8 +19,12 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 20.10
-      - name: Install Dependencies
-        run: npm ci
+
+      - name: Install Auth Dependencies
+        run: npm ci --prefix api/auth/
+      - name: Install Account Dependencies
+        run: npm ci --prefix api/account/
+
       - name: Run Auth Tests
         run: npm test --prefix api/auth/
       - name: Run Account Tests
