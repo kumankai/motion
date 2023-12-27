@@ -25,7 +25,7 @@ CREATE TABLE IF NOT EXISTS Transactions(
     Date DATETIME,
     UNIQUE (TransID),
     PRIMARY KEY (TransID),
-    FOREIGN KEY (CardID) REFERENCES Card(CardID)
+    FOREIGN KEY (CardID) REFERENCES Cards(CardID)
 );
 
 CREATE TABLE IF NOT EXISTS Incomes(
@@ -36,7 +36,7 @@ CREATE TABLE IF NOT EXISTS Incomes(
     Annual DOUBLE(10, 2),
     UNIQUE (IncomeID),
     PRIMARY KEY (IncomeID),
-    FOREIGN KEY (CardID) REFERENCES Card(CardID)
+    FOREIGN KEY (CardID) REFERENCES Cards(CardID)
 );
 
 CREATE TABLE IF NOT EXISTS Expenses(
@@ -47,7 +47,7 @@ CREATE TABLE IF NOT EXISTS Expenses(
     Annual DOUBLE(10, 2),
     UNIQUE (ExpenseID),
     PRIMARY KEY (ExpenseID),
-    FOREIGN KEY (CardID) REFERENCES Card(CardID)
+    FOREIGN KEY (CardID) REFERENCES Cards(CardID)
 );
 
 CREATE DATABASE IF NOT EXISTS Tokens;

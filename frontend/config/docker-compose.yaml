@@ -7,8 +7,8 @@ services:
     ports:
       - "8080:8080"
     volumes:
+      - "./scripts/init.sql:/docker-entrypoint-initdb.d/1.sql"
       - mysql-data:/var/lib/mysql
-      - ./scripts:/docker-entrypoint-initdb.d
 
   auth:
     image: jangga/auth:latest
