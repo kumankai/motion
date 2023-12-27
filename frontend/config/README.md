@@ -25,3 +25,11 @@ npm start
 - Scan the QR code generated in the terminal
 
 If you have a Mac with Xcode installed, you may enable hot reload on your Mac.
+
+### Running the APIs
+
+Run while in the same directory as docker-compose:
+
+```
+docker-compose up
+```
