@@ -10,7 +10,9 @@ app.use(express.json());
 
 
 mongoose.connect(process.env.MDB_URL)
-.then((result) => app.listen(PORT))
+.then((result) => {
+    console.log(`API listening on port ${PORT}`)
+    app.listen(PORT)})
 .catch((err) => console.log(err));
 
 app.use(authRoutes);
