@@ -1,9 +1,15 @@
 /*
 MODULE contains authentication actions
 */
-const User = require('../models/User');
+const mongoUser = require('../models/mongo-User');
+const mysqlUser = require('../models/mysql-User');
 const jwt = require('jsonwebtoken');
+const bcrypt = require('bcrypt');
 const handle = require('../helpers/errors');
+const db = require('../database/mysql');
+const { Model } = require('objection');
+
+Model.knex(db);
 
 const createToken = (id) => {
     return jwt.sign({ id }, process.env.ACCESS_TOKEN_SECRET, {
@@ -11,15 +17,30 @@ const createToken = (id) => {
     })
 }
 
+const hashpwd = async (password) => {
+    const salt = await bcrypt.genSalt();
+    const hashedpwd = await bcrypt.hash(password, salt);
+    return hashedpwd;
+}
+
 const signup = async (req, res) => {
     const { username, password } = req.body;
 
     try{
+        const hashedpwd = await hashpwd(password);
+        
         //Saves the user in DB
-        const user = await User.create({ username, password });
-        const token = createToken(user._id);
+        const user = await mongoUser.create({ username: username, password: hashedpwd });
+        const userID = user._id.toString();
+        await mysqlUser.query().insert({
+            userID: userID,
+            username: username,
+            password: hashedpwd
+        });
 
-        res.status(201).json({ user: user._id, access_token: token });
+        const token = createToken(userID);
+
+        res.status(201).json({ user: userID, access_token: token });
     }
     catch (err) {
         const error = handle.credentialCheck(err);
@@ -32,7 +53,7 @@ const login = async (req, res) => {
     const { username, password } = req.body;
 
     try {
-        const user = await User.login(username, password);
+        const user = await mongoUser.login(username, password);
         const token = createToken({ user: user._id });
 
         res.status(200).json({ user: user._id, access_token: token });
