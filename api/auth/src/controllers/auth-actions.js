@@ -3,31 +3,18 @@ MODULE contains authentication actions
 */
 const mongoUser = require('../models/mongo-User');
 const mysqlUser = require('../models/mysql-User');
-const jwt = require('jsonwebtoken');
-const bcrypt = require('bcrypt');
+const auth = require('../helpers/authenticate');
 const handle = require('../helpers/errors');
 const db = require('../database/mysql');
 const { Model } = require('objection');
 
 Model.knex(db);
 
-const createToken = (id) => {
-    return jwt.sign({ id }, process.env.ACCESS_TOKEN_SECRET, {
-        expiresIn: 3*24*60*60 //Three days
-    })
-}
-
-const hashpwd = async (password) => {
-    const salt = await bcrypt.genSalt();
-    const hashedpwd = await bcrypt.hash(password, salt);
-    return hashedpwd;
-}
-
 const signup = async (req, res) => {
     const { username, password } = req.body;
 
     try{
-        const hashedpwd = await hashpwd(password);
+        const hashedpwd = await auth.hashpwd(password);
         
         //Saves the user in DB
         const user = await mongoUser.create({ username: username, password: hashedpwd });
@@ -38,7 +25,7 @@ const signup = async (req, res) => {
             password: hashedpwd
         });
 
-        const token = createToken(userID);
+        const token = auth.createToken(userID);
 
         res.status(201).json({ user: userID, access_token: token });
     }
@@ -54,9 +41,10 @@ const login = async (req, res) => {
 
     try {
         const user = await mongoUser.login(username, password);
-        const token = createToken({ user: user._id });
+        const userID = user._id.toString();
+        const token = auth.createToken(userID);
 
-        res.status(200).json({ user: user._id, access_token: token });
+        res.status(200).json({ user: userID, access_token: token });
     }
     catch (err) {
         const error = handle.credentialCheck(err);
