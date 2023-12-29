@@ -1,4 +1,14 @@
 services:
+  auth:
+    image: jangga/auth:latest
+    ports:
+      - "5001:5001"
+    environment:
+      MYSQL_HOST: ${MYSQL_HOST}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DB: ${MYSQL_DATABASE}
+
   mysql:
     image: mysql:latest
     environment:
@@ -9,9 +19,6 @@ services:
     volumes:
       - "./scripts/init.sql:/docker-entrypoint-initdb.d/1.sql"
       - mysql-data:/var/lib/mysql
-
-  auth:
-    image: jangga/auth:latest
 
 volumes:
   mysql-data:
