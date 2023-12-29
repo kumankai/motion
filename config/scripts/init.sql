@@ -1,6 +1,6 @@
-USE Users;
+USE Accounts;
 
-CREATE TABLE IF NOT EXISTS User (
+CREATE TABLE IF NOT EXISTS Users (
     UserID VARCHAR(255) NOT NULL,
     Username VARCHAR(25),
     Password VARCHAR(255),
@@ -14,7 +14,7 @@ CREATE TABLE IF NOT EXISTS Cards (
     Balance DOUBLE(10, 2),
     UNIQUE (CardID),
     PRIMARY KEY (CardID),
-    FOREIGN KEY (UserID) REFERENCES User(UserID)
+    FOREIGN KEY (UserID) REFERENCES Users(UserID)
 );
 
 CREATE TABLE IF NOT EXISTS Transactions(
