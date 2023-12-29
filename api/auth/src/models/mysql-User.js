@@ -17,7 +17,7 @@ class User extends Model {
             properties: {
                 userID: { type: 'string' },
                 username: { type: 'string' },
-                password: { type: 'string' }
+                password: { type: 'string', minLength: 8 }
             }
         }
     }
