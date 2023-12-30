@@ -9,6 +9,14 @@ class User extends Model {
         return 'userID'
     }
 
+    static async register(user){
+        await User.query().insert({
+            userID: user.userID,
+            username: user.username,
+            password: user.password
+        });
+    }
+
     static get jsonSchema() {
         return {
             type: 'object',

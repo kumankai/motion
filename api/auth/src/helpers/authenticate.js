@@ -1,10 +1,19 @@
 /**
  * MODULE contains functions that help with authentication
  */
+require('dotenv').config();
+const jwt = require('jsonwebtoken');
+const bcrypt = require('bcrypt');
 
 const createToken = (id) => {
     return jwt.sign({ id }, process.env.ACCESS_TOKEN_SECRET, {
-        expiresIn: 3*24*60*60 //Three days
+        expiresIn: 3*24*60*60 // Three days
+    })
+}
+
+const createRefreshToken = (id) => {
+    return jwt.sign({ id }, process.env.REFRESH_TOKEN_SECRET, {
+        expiresIn: 30*24*60*60 // Thirty Days
     })
 }
 
@@ -14,4 +23,4 @@ const hashpwd = async (password) => {
     return hashedpwd;
 }
 
-module.exports = { createToken, hashpwd };
+module.exports = { createToken, createRefreshToken, hashpwd };
