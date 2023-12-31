@@ -61,4 +61,4 @@ const refresh = async (req, res) => {
     
 }
 
-module.exports = { signup, login, logout, regenerateToken };
+module.exports = { signup, login, logout, refresh };
