@@ -2,11 +2,11 @@ const { Model } = require('objection');
 
 class User extends Model {
     static get tableName() {
-        return 'Users'
+        return 'Users';
     }
 
     static get idColumn() {
-        return 'userID'
+        return 'userID';
     }
 
     static async register(user){
@@ -27,7 +27,7 @@ class User extends Model {
                 username: { type: 'string' },
                 password: { type: 'string', minLength: 8 }
             }
-        }
+        };
     }
 }
 

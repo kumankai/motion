@@ -30,11 +30,11 @@ const signup = async (req, res) => {
 
         // Refresh token DB
         Model.knex(authdb);
-        const token = auth.createToken(userID);
+        const accessToken = auth.createToken(userID);
         const refreshToken = auth.createRefreshToken(userID);
         await tokenUser.register({ userID, refreshToken });
 
-        res.status(201).json({ user: userID, access_token: token });
+        res.status(201).json({ userID, accessToken });
     }
     catch (err) {
         const error = handle.credentialCheck(err);
@@ -49,9 +49,13 @@ const login = async (req, res) => {
     try {
         const user = await mongoUser.login(username, password);
         const userID = user._id.toString();
-        const token = auth.createToken(userID);
+        const accessToken = auth.createToken(userID);
 
-        res.status(200).json({ user: userID, access_token: token });
+        // Create new refresh Token
+        const refreshToken = auth.createRefreshToken(userID);
+        await tokenUser.updateToken({ userID, refreshToken });
+
+        res.status(200).json({ userID, accessToken });
     }
     catch (err) {
         const error = handle.credentialCheck(err);
@@ -60,8 +64,17 @@ const login = async (req, res) => {
     }
 }
 
-const logout = (req, res) => {
-    
+const logout = async (req, res) => {
+    const { userID } = req.body;
+
+    try{
+        await tokenUser.logout(userID);
+        res.status(200).json({ message: "Successfully logged out" });
+    }
+    catch (err) {
+        console.log(err);
+        res.status(400).json({ err });
+    }
 }
 
 const refresh = async (req, res) => {
