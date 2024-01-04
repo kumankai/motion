@@ -54,15 +54,10 @@ CREATE DATABASE IF NOT EXISTS Tokens;
 
 USE Tokens;
 
-CREATE TABLE IF NOT EXISTS User(
-    UserID VARCHAR(255) NOT NULL,
-    UNIQUE (UserID),
-    PRIMARY KEY (UserID)
-);
-
 CREATE TABLE IF NOT EXISTS RefreshTokens(
     UserID VARCHAR(255) NOT NULL,
-    RefreshToken VARCHAR(255) NOT NULL,
+    RefreshToken VARCHAR(255),
     UNIQUE (RefreshToken),
-    FOREIGN KEY (UserID) REFERENCES User(UserID)
+    UNIQUE (UserID),
+    PRIMARY KEY (UserID)
 )
