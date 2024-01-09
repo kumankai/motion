@@ -20,12 +20,19 @@ class RefreshToken extends Model {
         });
     }
 
+    static async getRefreshToken(userID){
+        const token = await RefreshToken.query()
+        .select('RefreshToken')
+        .where('userID', userID);
+        return token[0].RefreshToken;
+    }
+
     static async updateToken(user){
         await RefreshToken.query()
         .findById(user.userID)
         .patch({
             RefreshToken: user.refreshToken
-        })
+        });
     }
 
     static async logout(userID){

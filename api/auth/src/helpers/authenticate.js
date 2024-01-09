@@ -8,13 +8,13 @@ const bcrypt = require('bcrypt');
 const createToken = (id) => {
     return jwt.sign({ id }, process.env.ACCESS_TOKEN_SECRET, {
         expiresIn: 3*24*60*60 // Three days
-    })
+    });
 }
 
 const createRefreshToken = (id) => {
     return jwt.sign({ id }, process.env.REFRESH_TOKEN_SECRET, {
         expiresIn: 30*24*60*60 // Thirty Days
-    })
+    });
 }
 
 const hashpwd = async (password) => {
@@ -23,4 +23,8 @@ const hashpwd = async (password) => {
     return hashedpwd;
 }
 
-module.exports = { createToken, createRefreshToken, hashpwd };
+const validateToken = (token) => {
+    return jwt.verify(token, process.env.REFRESH_TOKEN_SECRET);
+}
+
+module.exports = { createToken, createRefreshToken, hashpwd, validateToken };
