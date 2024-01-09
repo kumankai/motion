@@ -52,6 +52,7 @@ const login = async (req, res) => {
         const accessToken = auth.createToken(userID);
 
         // Create new refresh Token
+        Model.knex(authdb);
         const refreshToken = auth.createRefreshToken(userID);
         await tokenUser.updateToken({ userID, refreshToken });
 
@@ -68,6 +69,8 @@ const logout = async (req, res) => {
     const { userID } = req.body;
 
     try{
+        // Refresh token DB
+        Model.knex(authdb);
         await tokenUser.logout(userID);
         res.status(200).json({ message: "Successfully logged out" });
     }
@@ -78,7 +81,25 @@ const logout = async (req, res) => {
 }
 
 const refresh = async (req, res) => {
-    
+    const { userID } = req.body;
+
+    try{
+         // Refresh token DB
+        Model.knex(authdb);
+        // Validate user refresh token
+        const refreshToken = await tokenUser.getRefreshToken(userID);
+        auth.validateToken(refreshToken);
+
+        // Create new access token
+        const accessToken = auth.createToken(userID);
+        res.status(201).json({ accessToken });
+    }
+    catch (err) {
+        // Log out user
+        console.log(err);
+        await tokenUser.logout(userID);
+        res.status(401).json({ message: "User requires authentication" });
+    }
 }
 
 module.exports = { signup, login, logout, refresh };

@@ -57,7 +57,6 @@ USE Tokens;
 CREATE TABLE IF NOT EXISTS RefreshTokens(
     UserID VARCHAR(255) NOT NULL,
     RefreshToken VARCHAR(255),
-    UNIQUE (RefreshToken),
     UNIQUE (UserID),
     PRIMARY KEY (UserID)
 )
