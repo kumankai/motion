@@ -12,7 +12,7 @@ auth-api
 
 ```
 npm i jest --save-dev
-npm i express dotenv bcrypt jsonwebtoken mongoose mysql2 knex objection
+npm i express dotenv bcrypt jsonwebtoken mongoose mysql2 knex objection node-schedule
 ```
 
 account-api
